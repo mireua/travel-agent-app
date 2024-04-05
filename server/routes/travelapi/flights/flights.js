@@ -22,9 +22,6 @@ const fetchData = async (fromId, toId, departDate, returnDate) => {
       headers: headers
     });
     
-    // Log the received flight information to the backend console
-    console.log('Received flight information:', response.data);
-    
     // Return the fetched flights data
     return response.data;
   } catch (error) {

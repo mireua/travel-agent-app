@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const fetchData = require('./flights'); // Assuming this file itself
-const extractFlightInfo = require('./extract'); // Assuming extractFlightInfo module is properly defined
 
 router.post('/searchFlights', async (req, res) => {
   const { from, to, departDate, returnDate } = req.body;
@@ -15,14 +14,30 @@ router.post('/searchFlights', async (req, res) => {
 
   try {
     const data = await fetchData(from, to, departDate, returnDate); // Fetch data from the API
-    console.log('Data received from API:', data); // Log the data received from the API
-    const flightInfo = extractFlightInfo(data); // Extract flight information
-
-    // Log the extracted flight information to the backend console
-    console.log('Flight Information:', flightInfo);
     
+    const flightsData = [];
+
+    // Limit the number of flights to 4 or less
+    const numFlights = Math.min(data.data.flightOffers.length, 4);
+
+    for (let i = 0; i < numFlights; i++) {
+      const flight = data.data.flightOffers[i];
+      const flightData = {
+        from: flight.segments[0].departureAirport.name,
+        to: flight.segments[0].arrivalAirport.name,
+        depart: new Date(flight.segments[0].departureTime).toLocaleString(),
+        arrival: new Date(flight.segments[0].arrivalTime).toLocaleString(),
+        airline: flight.segments[0].legs[0].carriersData[0].name,
+        price: '€' + flight.priceBreakdown.total.units
+      };
+      flightsData.push(flightData);
+    }
+    
+    console.log('Flight Information');
+    console.log(flightsData); // Log all flight data
+
     // Send the extracted flight information to the front end
-    res.json(flightInfo);
+    res.json(flightsData);
   } catch (error) {
     console.error(error);
     res.status(500).send("Error fetching flight data.");

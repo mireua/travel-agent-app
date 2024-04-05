@@ -142,6 +142,7 @@ function FlightSearchForm() {
             <TableBody>
               {flights.map((flight, index) => (
                 <TableRow key={index}>
+                  //todo: more fields
                   <TableCell>{flight.from}</TableCell>
                   <TableCell>{flight.to}</TableCell>
                   <TableCell>{flight.dateDeparture}</TableCell>

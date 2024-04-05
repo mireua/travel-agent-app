@@ -2,71 +2,36 @@ import * as React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import CarRentalIcon from '@mui/icons-material/CarRental';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import HotelIcon from '@mui/icons-material/Hotel';
+import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 
-export const mainListItems = (
+export const mainListItems = (setCurrentView) => (
   <React.Fragment>
-    <ListItemButton>
+     <ListItemButton onClick={() => setCurrentView("flights")}>
       <ListItemIcon>
-        <DashboardIcon />
+        <AirplaneTicketIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="Flights" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton onClick={() => setCurrentView("hotels")}>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <HotelIcon />
       </ListItemIcon>
-      <ListItemText primary="Orders" />
+      <ListItemText primary="Hotels" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton onClick={() => setCurrentView("rentals")}>
       <ListItemIcon>
-        <PeopleIcon />
+        <CarRentalIcon />
       </ListItemIcon>
-      <ListItemText primary="Customers" />
+      <ListItemText primary="Car Rental" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton onClick={() => setCurrentView("admin")}>
       <ListItemIcon>
-        <BarChartIcon />
+        <SupervisorAccountIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItemButton>
-  </React.Fragment>
-);
-
-export const secondaryListItems = (
-  <React.Fragment>
-    <ListSubheader component="div" inset>
-      Saved reports
-    </ListSubheader>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
+      <ListItemText primary="Admin Panel" />
     </ListItemButton>
   </React.Fragment>
 );

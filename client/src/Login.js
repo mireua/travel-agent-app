@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,37 +7,55 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import RegistrationForm from './RegForm'; // Import the RegistrationForm component
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import AirplaneIcon from '@mui/icons-material/FlightTakeoff';
+import '@fontsource/poppins';
+import './login.css';
+import RegistrationForm from './RegForm'; // Assuming this is your registration form component
 
 const containerStyle = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  minHeight: '100vh', // Center vertically on the viewport
+  minHeight: '100vh',
+  width: '100vw',
+  color: 'white',
 };
 
 const formStyle = {
   width: '100%',
-  maxWidth: '400px', // Limit the form width
+  maxWidth: '400px',
   textAlign: 'center',
+  animation: 'fadeIn 1s ease-out',
+  fontFamily: '"Poppins", sans-serif',
 };
 
 const buttonStyle = {
-  marginTop: '20px', // Add some space below the text fields
+  marginTop: '20px',
+  fontFamily: '"Poppins", sans-serif',
 };
 
 const registerButtonStyle = {
-  marginTop: '10px', // Add space between the Login button and Register button
+  marginTop: '10px',
+  fontFamily: '"Poppins", sans-serif',
 };
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isRegistering, setIsRegistering] = useState(false); // To control the visibility of the registration form
+  const [isRegistering, setIsRegistering] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      // If token exists, navigate to dashboard
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -54,9 +72,9 @@ function Login() {
     try {
       const response = await axios.post('http://localhost:5000/api/login', { email, password });
 
-      if (response.data.message === 'Login successful.') {
-        // Use React Router to navigate to the Dashboard page
-        navigate("/dashboard");
+      if (response.data.message === 'Login successful') {
+        localStorage.setItem('token', response.data.token);
+        navigate('/dashboard');
       } else {
         console.error('Login failed:', response.data.message);
         handleSnackbarOpen();
@@ -88,7 +106,8 @@ function Login() {
     <Container component="main" maxWidth="xs" style={containerStyle}>
       <CssBaseline />
       <div style={formStyle}>
-        <Typography variant="h5">TravelEasy</Typography>
+        <AirplaneIcon style={{ fontSize: 40, marginTop: '20px', color: 'white' }} />
+        <Typography variant="h5" style={{ color: 'white', fontFamily: '"Poppins", sans-serif' }}>TravelEasy</Typography>
         {!isRegistering ? (
           <div>
             <TextField
@@ -100,6 +119,12 @@ function Login() {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              InputLabelProps={{
+                style: { color: 'white' },
+              }}
+              inputProps={{
+                style: { color: 'white' },
+              }}
             />
             <TextField
               variant="outlined"
@@ -111,6 +136,12 @@ function Login() {
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              InputLabelProps={{
+                style: { color: 'white' },
+              }}
+              inputProps={{
+                style: { color: 'white' },
+              }}
             />
             <Button
               variant="contained"
@@ -123,8 +154,7 @@ function Login() {
             </Button>
             <Button
               variant="text"
-              color="secondary"
-              style={registerButtonStyle}
+              style={{ ...registerButtonStyle, color: 'white' }}
               onClick={handleRegisterButtonClick}
             >
               Don't have an account? Register now
@@ -133,8 +163,6 @@ function Login() {
         ) : (
           <RegistrationForm onRegister={handleRegister} onCancel={handleCancelRegistration} />
         )}
-
-        {/* Snackbar for login failure */}
         <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
           <MuiAlert elevation={6} variant="filled" severity="error" onClose={handleSnackbarClose}>
             Login failed. Please check your credentials.

@@ -35,8 +35,7 @@ function HotelSearchForm() {
     const { name, value } = e.target;
     setHotelDetails({ ...hotelDetails, [name]: value });
   };
-
-  const handleSubmit = async (e) => {
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Searching for hotels with details:', hotelDetails);

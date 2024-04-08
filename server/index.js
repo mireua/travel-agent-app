@@ -6,6 +6,7 @@ const cors = require('cors');
 const loginRoutes = require('./routes/login');
 const regRoutes = require('./routes/register');
 const flightRoutes = require('./routes/travelapi/flights/route.js');
+const hotelRoutes = require('./routes/travelapi/hotels/route.js');
 
 app.use(express.json());
 app.use(cors());
@@ -14,6 +15,7 @@ app.use(cors());
 app.use('/api', loginRoutes);
 app.use('/api', regRoutes);
 app.use('/api', flightRoutes);
+app.use('/api', hotelRoutes);
 
 connectToMongoDB();
 

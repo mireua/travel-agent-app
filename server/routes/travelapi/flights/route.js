@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const fetchData = require('./flights'); // Assuming this file itself
+const fetchData = require('./flights');
 
 router.post('/searchFlights', async (req, res) => {
   const { from, to, departDate, returnDate } = req.body;
 
-  // Log the received flight details for debugging
+  // log the received flight details for debugging
   console.log('Received flight details:');
   console.log('From:', from);
   console.log('To:', to);
@@ -13,11 +13,11 @@ router.post('/searchFlights', async (req, res) => {
   console.log('Return Date:', returnDate);
 
   try {
-    const data = await fetchData(from, to, departDate, returnDate); // Fetch data from the API
+    const data = await fetchData(from, to, departDate, returnDate); 
     
     const flightsData = [];
 
-    // Limit the number of flights to 4 or less
+    // limit the number of flights to 4 or less
     const numFlights = Math.min(data.data.flightOffers.length, 4);
 
     for (let i = 0; i < numFlights; i++) {
@@ -34,9 +34,9 @@ router.post('/searchFlights', async (req, res) => {
     }
     
     console.log('Flight Information');
-    console.log(flightsData); // Log all flight data
+    console.log(flightsData);
 
-    // Send the extracted flight information to the front end
+    // send the extracted flight information to the front end
     res.json(flightsData);
   } catch (error) {
     console.error(error);

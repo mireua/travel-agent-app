@@ -42,10 +42,17 @@ function HotelSearchForm() {
     setHotelDetails({ ...hotelDetails, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Searching for hotels with details:', hotelDetails);
-    // Implement your search logic here
+    
+    try {
+      const response = await axios.post('http://localhost:5000/api/searchHotels', flightDetails);
+      //setFlights(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching hotels:', error);
+    }
   };
 
   const handleBookHotel = (hotel) => {

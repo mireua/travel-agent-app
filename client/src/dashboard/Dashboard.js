@@ -17,7 +17,7 @@ import { mainListItems } from './listItems';
 import Flights from './Flights';
 import Admin from './Admin';
 import Hotels from './Hotels';
-import Rental from './Rental';
+import Attractions from './Attractions';
 import Main from './Main';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
@@ -102,8 +102,8 @@ export default function Dashboard() {
         return <Flights />;
       case 'hotels':
         return <Hotels />;
-      case 'rentals':
-        return <Rental />;
+      case 'attractions':
+        return <Attractions />;
       case 'admin':
         return <Admin />;
       default:

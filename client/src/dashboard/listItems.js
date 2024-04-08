@@ -2,7 +2,7 @@ import * as React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import CarRentalIcon from '@mui/icons-material/CarRental';
+import AttractionsIcon from '@mui/icons-material/Attractions';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import HotelIcon from '@mui/icons-material/Hotel';
 import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
@@ -21,11 +21,11 @@ export const mainListItems = (setCurrentView) => (
       </ListItemIcon>
       <ListItemText primary="Hotels" />
     </ListItemButton>
-    <ListItemButton onClick={() => setCurrentView("rentals")}>
+    <ListItemButton onClick={() => setCurrentView("attractions")}>
       <ListItemIcon>
-        <CarRentalIcon />
+        <AttractionsIcon />
       </ListItemIcon>
-      <ListItemText primary="Car Rental" />
+      <ListItemText primary="Attractions" />
     </ListItemButton>
     <ListItemButton onClick={() => setCurrentView("admin")}>
       <ListItemIcon>

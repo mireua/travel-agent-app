@@ -75,6 +75,13 @@ function FlightSearchForm() {
                       label="From"
                       onChange={handleInputChange}
                       required
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 200,
+                          },
+                        },
+                      }}
                     >
                       {cities.map((city) => (
                         <MenuItem key={city.airport} value={city.airport}>
@@ -94,6 +101,13 @@ function FlightSearchForm() {
                       label="To"
                       onChange={handleInputChange}
                       required
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 200,
+                          },
+                        },
+                      }}
                     >
                       {cities.map((city) => (
                         <MenuItem key={city.airport} value={city.airport}>

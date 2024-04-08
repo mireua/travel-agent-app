@@ -72,6 +72,13 @@ function HotelSearchForm() {
                       label="City"
                       onChange={handleInputChange}
                       required
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 200,
+                          },
+                        },
+                      }}
                     >
                       {cities.map((city) => (
                         <MenuItem key={city.city} value={city.city}>

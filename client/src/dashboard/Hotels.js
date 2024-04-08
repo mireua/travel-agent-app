@@ -37,6 +37,7 @@ function HotelSearchForm() {
   };
 
   const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Searching for hotels with details:', hotelDetails);
 

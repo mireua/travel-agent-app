@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import cities from './data/cities.json';
 import {
   Container,
   Grid,
@@ -16,41 +18,39 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  IconButton,
 } from '@mui/material';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import StarRateIcon from '@mui/icons-material/StarRate';
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
 
 function HotelSearchForm() {
   const [hotelDetails, setHotelDetails] = useState({
-    destination: '',
-    checkIn: '',
-    checkOut: '',
+    city: '',
+    arrival: '',
+    departure: '',
     guests: 1,
   });
 
-  // Sample hotel data
-  const hotels = [
-    { id: 1, name: "Hotel Sunshine", destination: "Paris", price: "$150/night", rating: 4 },
-    { id: 2, name: "Mountain Retreat", destination: "Swiss Alps", price: "$200/night", rating: 5 },
-    // Add more hotels as needed
-  ];
+  const [hotels, setHotels] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setHotelDetails({ ...hotelDetails, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Searching for hotels with details:', hotelDetails);
-    // Implement your search logic here
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/searchHotels', hotelDetails);
+      setHotels(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching hotels:', error);
+    }
   };
 
   const handleBookHotel = (hotel) => {
     console.log('Booking hotel:', hotel);
-    // Implement your booking logic here
   };
 
   return (
@@ -65,27 +65,28 @@ function HotelSearchForm() {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <FormControl fullWidth>
-                    <InputLabel>Destination</InputLabel>
+                    <InputLabel>City</InputLabel>
                     <Select
-                      name="destination"
-                      value={hotelDetails.destination}
-                      label="Destination"
+                      name="city"
+                      value={hotelDetails.city}
+                      label="City"
                       onChange={handleInputChange}
                       required
                     >
-                      <MenuItem value="Paris">Paris</MenuItem>
-                      <MenuItem value="Swiss Alps">Swiss Alps</MenuItem>
-                      <MenuItem value="New York">New York</MenuItem>
-                      {/* Add more options as needed */}
+                      {cities.map((city) => (
+                        <MenuItem key={city.city} value={city.city}>
+                          {city.city}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     type="date"
-                    name="checkIn"
+                    name="arrival"
                     label="Check-in Date"
-                    value={hotelDetails.checkIn}
+                    value={hotelDetails.arrival}
                     onChange={handleInputChange}
                     fullWidth
                     required
@@ -97,9 +98,9 @@ function HotelSearchForm() {
                 <Grid item xs={12}>
                   <TextField
                     type="date"
-                    name="checkOut"
+                    name="departure"
                     label="Check-out Date"
-                    value={hotelDetails.checkOut}
+                    value={hotelDetails.departure}
                     onChange={handleInputChange}
                     fullWidth
                     required
@@ -140,29 +141,20 @@ function HotelSearchForm() {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Destination</TableCell>
+                    <TableCell>City</TableCell>
+                    <TableCell>Check-in</TableCell>
+                    <TableCell>Check-out</TableCell>
                     <TableCell>Price</TableCell>
-                    <TableCell>Rating</TableCell>
                     <TableCell>Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {hotels.map((hotel) => (
-                    <TableRow key={hotel.id}>
-                      <TableCell>{hotel.name}</TableCell>
-                      <TableCell>
-                        <IconButton size="small">
-                          <LocationOnIcon color="action" />
-                        </IconButton>
-                        {hotel.destination}
-                      </TableCell>
+                    <TableRow key={hotel.city}>
+                      <TableCell>{hotel.city}</TableCell>
+                      <TableCell>{hotel.arrival}</TableCell>
+                      <TableCell>{hotel.depart}</TableCell>
                       <TableCell>{hotel.price}</TableCell>
-                      <TableCell>
-                        {Array.from({ length: hotel.rating }, (_, index) => (
-                          <StarRateIcon key={index} color="secondary" style={{ verticalAlign: 'middle' }} />
-                        ))}
-                      </TableCell>
                       <TableCell>
                         <Button
                           variant="contained"

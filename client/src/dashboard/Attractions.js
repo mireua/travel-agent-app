@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material';
 import cities from './data/cities.json';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CategoryIcon from '@mui/icons-material/Category';
 
 const AttractionsTable = () => {
   const [attractions, setAttractions] = useState([]);
@@ -23,6 +25,11 @@ const AttractionsTable = () => {
     } catch (error) {
       console.error('Error fetching attractions:', error);
     }
+  };
+
+  const handleSave = (attraction) => {
+    // Add your save logic here
+    console.log('Saving attraction:', attraction);
   };
 
   return (
@@ -61,18 +68,28 @@ const AttractionsTable = () => {
         <Table aria-label="attractions table">
           <TableHead>
             <TableRow>
-              <TableCell>Attraction</TableCell>
-              <TableCell>Type</TableCell>
+              <TableCell><LocationOnIcon /> Attraction</TableCell>
+              <TableCell><CategoryIcon /> Type</TableCell>
+              <TableCell>Actions</TableCell> {/* New column for Save button */}
             </TableRow>
           </TableHead>
           <TableBody>
-          {attractions.map((attraction, index) => (
-            <TableRow key={index}>
-              <TableCell>{attraction.city}</TableCell>
-              <TableCell>{attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+            {attractions.map((attraction, index) => (
+              <TableRow key={index}>
+                <TableCell>{attraction.city}</TableCell>
+                <TableCell>{attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleSave(attraction)}
+                  >
+                    Save
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
     </Box>

@@ -1,68 +1,48 @@
-import React, { useState } from 'react';
-import './css/main.css';
-import countryCityData from './data/cities.json';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import React from 'react';
+import './css/dashboard.css';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import FlightIcon from '@mui/icons-material/Flight';
+import HotelIcon from '@mui/icons-material/Hotel';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 
-// Assuming onDestinationFound is passed as a prop from Dashboard
-const TravelSearch = ({ onDestinationFound }) => {
-  const [searchInput, setSearchInput] = useState('');
-  const [destinationFound, setDestinationFound] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const foundDestination = countryCityData.find(
-      (item) =>
-        item.country.toLowerCase() === searchInput.toLowerCase() ||
-        (item.city && item.city.toLowerCase() === searchInput.toLowerCase())
-    );
-    if (foundDestination) {
-      console.log('Destination found:', foundDestination);
-      setDestinationFound(true);
-      sessionStorage.setItem('destination', JSON.stringify(foundDestination));
-      onDestinationFound(); // Navigate to the flights component
-    } else {
-      console.log('Destination not found:', searchInput);
-      setDestinationFound(false);
-      setOpenSnackbar(true);
-    }
-    setFormSubmitted(true);
-  };
-
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenSnackbar(false);
-  };
-
-  return (
-    <div className="travel-search-container">
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={4000}
-        onClose={handleSnackbarClose}
+const Main = ({ setCurrentView }) => (
+  <div className="travel-search-container">
+    <div className="background"></div> {/* This will be styled in CSS */}
+    <Typography variant="h3" className="typing-text" style={{ textAlign: 'center', marginBottom: '20px' }}>
+      TravelEasy, travel easy.
+    </Typography>
+    <div className="button-container" style={{ display: 'flex', justifyContent: 'center' }}>
+      <Button
+        variant="contained"
+        size="large"
+        color="primary"
+        startIcon={<FlightIcon />}
+        onClick={() => setCurrentView('flights')}
       >
-        <MuiAlert elevation={6} variant="filled" severity="error" onClose={handleSnackbarClose}>
-          Destination not found. Please enter a valid destination.
-        </MuiAlert>
-      </Snackbar>
-      <div className="background"></div> {/* This will be styled in CSS */}
-      <form className="search-form" onSubmit={handleSubmit}>
-        <h1>Where do you want to go?</h1>
-        <input
-          type="text"
-          placeholder="Enter your destination"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          required
-        />
-        <button type="submit">Search</button>
-      </form>
+        Book a Flight
+      </Button>
+      <Button
+        variant="contained"
+        size="large"
+        color="primary"
+        startIcon={<HotelIcon />}
+        onClick={() => setCurrentView('hotels')}
+        style={{ marginLeft: '10px', marginRight: '10px' }}
+      >
+        View Hotels
+      </Button>
+      <Button
+        variant="contained"
+        size="large"
+        color="primary"
+        startIcon={<LocationCityIcon />}
+        onClick={() => setCurrentView('attractions')}
+      >
+        View Attractions
+      </Button>
     </div>
-  );
-};
+  </div>
+);
 
-export default TravelSearch;
+export default Main;

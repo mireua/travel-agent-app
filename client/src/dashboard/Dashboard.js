@@ -10,16 +10,18 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import LogoutIcon from '@mui/icons-material/Logout';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import FlightIcon from '@mui/icons-material/FlightTakeoff';
 import { mainListItems } from './listItems';
 import Flights from './Flights';
-import Admin from './Admin';
+import Admin from '../admin/Admin';
 import Hotels from './Hotels';
+import Itinerary from './Itinerary';
 import Attractions from './Attractions';
 import Main from './Main';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -73,7 +75,8 @@ const defaultTheme = createTheme();
 
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
-  const [currentView, setCurrentView] = useState('main'); // Initial view
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [currentView, setCurrentView] = useState('main');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -87,17 +90,31 @@ export default function Dashboard() {
     setOpen(!open);
   };
 
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleLogout = () => {
-    // Clear token from local storage
     localStorage.removeItem('token');
-    // Redirect to login page
     navigate('/');
+  };
+
+  const handleItinerary = () => {
+    setCurrentView('itinerary');
+    handleMenuClose();
+  };
+  const handleAdmin = () => {
+    window.location.href = '/admin';
   };
 
   const renderCurrentView = () => {
     switch (currentView) {
       case 'main':
-        return <Main onDestinationFound={() => setCurrentView('flights')} />;
+        return <Main setCurrentView={setCurrentView} />;
       case 'flights':
         return <Flights />;
       case 'hotels':
@@ -106,8 +123,10 @@ export default function Dashboard() {
         return <Attractions />;
       case 'admin':
         return <Admin />;
+      case 'itinerary':
+        return <Itinerary />;
       default:
-        return <div>Select a view</div>; // Default or placeholder view
+        return <div>Select a view</div>;
     }
   };
 
@@ -116,83 +135,93 @@ export default function Dashboard() {
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
-          <Toolbar
+          <Toolbar sx={{ pr: '24px' }}>
+          {currentView !== 'main' && (
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleDrawer}
             sx={{
-              pr: '24px', // keep right padding when drawer closed
+              marginRight: '36px',
+              ...(open && { display: 'none' }),
             }}
           >
-            {currentView !== 'main' && (
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="open drawer"
-                onClick={toggleDrawer}
-                sx={{
-                  marginRight: '36px',
-                  ...(open && { display: 'none' }),
-                }}
-              >
-                <MenuIcon />
-              </IconButton>
-            )}
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                flexGrow: 1,
-                cursor: 'pointer',
-              }}
-              onClick={() => setCurrentView('main')}
-            >
-              <FlightIcon sx={{ mr: 1 }} />
-              <Typography variant="h6" noWrap component="div">
-                TravelEasy
-              </Typography>
-            </Box>
-            <IconButton color="inherit">
-              <AccountCircle />
-            </IconButton>
-            <IconButton color="inherit" onClick={handleLogout}>
-              <LogoutIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        {currentView !== 'main' && (
-          <Drawer variant="permanent" open={open}>
-            <Toolbar
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                px: [1],
-              }}
-            >
-              <IconButton onClick={toggleDrawer}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </Toolbar>
-            <Divider />
-            <List component="nav">
-              {mainListItems(setCurrentView)}
-            </List>
-          </Drawer>
+            <MenuIcon />
+          </IconButton>
         )}
         <Box
-          component="main"
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
+            display: 'flex',
+            alignItems: 'center',
             flexGrow: 1,
-            height: '100vh',
-            overflow: 'hidden', // Changed from 'auto' to 'hidden'
+            cursor: 'pointer',
+          }}
+          onClick={() => setCurrentView('main')}
+        >
+          <FlightIcon sx={{ mr: 1 }} />
+          <Typography variant="h6" noWrap component="div">
+            TravelEasy
+          </Typography>
+        </Box>
+        <IconButton color="inherit" onClick={handleProfileMenuOpen}>
+          <AccountCircle />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'bottom',  // Align the top of the menu with the bottom of the icon
+            horizontal: 'center',  // Align the center of the menu with the center of the icon
+          }}
+          transformOrigin={{
+            vertical: 'top',  // Transform from the top
+            horizontal: 'right',  // Align transformations to the right
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+        >
+          <MenuItem onClick={handleItinerary}>View Itinerary</MenuItem>
+          <MenuItem onClick={handleAdmin}>Admin Panel</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem> 
+        </Menu>
+      </Toolbar>
+    </AppBar>
+    {currentView !== 'main' && (
+      <Drawer variant="permanent" open={open}>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            px: [1],
           }}
         >
-          <Toolbar />
-          {renderCurrentView()}
-        </Box>
-      </Box>
-    </ThemeProvider>
-  );
+          <IconButton onClick={toggleDrawer}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </Toolbar>
+        <Divider />
+        <List component="nav">
+          {mainListItems(setCurrentView)}
+        </List>
+      </Drawer>
+    )}
+    <Box
+      component="main"
+      sx={{
+        backgroundColor: (theme) =>
+          theme.palette.mode === 'light'
+            ? theme.palette.grey[100]
+            : theme.palette.grey[900],
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'hidden',
+      }}
+    >
+      <Toolbar />
+      {renderCurrentView()}
+    </Box>
+  </Box>
+</ThemeProvider>
+);
 }

@@ -12,7 +12,7 @@
     {
         "country": "Germany",
         "city": "Berlin",
-        "airport": "TXL.AIRPORT"
+        "airport": "BER.AIRPORT"
     },
     {
         "country": "Italy",
@@ -23,11 +23,6 @@
         "country": "Spain",
         "city": "Madrid",
         "airport": "MAD.AIRPORT"
-    },
-    {
-        "country": "Russia",
-        "city": "Moscow",
-        "airport": "SVO.AIRPORT"
     },
     {
         "country": "Greece",
@@ -53,105 +48,5 @@
         "country": "Ireland",
         "city": "Dublin",
         "airport": "DUB.AIRPORT"
-    },
-    {
-        "country": "United States",
-        "city": "Washington",
-        "airport": "IAD.AIRPORT"
-    },
-    {
-        "country": "Canada",
-        "city": "Ottawa",
-        "airport": "YOW.AIRPORT"
-    },
-    {
-        "country": "Mexico",
-        "city": "Mexico City",
-        "airport": "MEX.AIRPORT"
-    },
-    {
-        "country": "Egypt",
-        "city": "Cairo",
-        "airport": "CAI.AIRPORT"
-    },
-    {
-        "country": "Kenya",
-        "city": "Nairobi",
-        "airport": "NBO.AIRPORT"
-    },
-    {
-        "country": "South Africa",
-        "city": "Pretoria",
-        "airport": "JNB.AIRPORT"
-    },
-    {
-        "country": "Nigeria",
-        "city": "Abuja",
-        "airport": "ABV.AIRPORT"
-    },
-    {
-        "country": "Australia",
-        "city": "Canberra",
-        "airport": "CBR.AIRPORT"
-    },
-    {
-        "country": "New Zealand",
-        "city": "Wellington",
-        "airport": "WLG.AIRPORT"
-    },
-    {
-        "country": "Fiji",
-        "city": "Suva",
-        "airport": "SUV.AIRPORT"
-    },
-    {
-        "country": "Japan",
-        "city": "Tokyo",
-        "airport": "HND.AIRPORT"
-    },
-    {
-        "country": "China",
-        "city": "Beijing",
-        "airport": "PEK.AIRPORT"
-    },
-    {
-        "country": "India",
-        "city": "New Delhi",
-        "airport": "DEL.AIRPORT"
-    },
-    {
-        "country": "Thailand",
-        "city": "Bangkok",
-        "airport": "BKK.AIRPORT"
-    },
-    {
-        "country": "Indonesia",
-        "city": "Jakarta",
-        "airport": "CGK.AIRPORT"
-    },
-    {
-        "country": "South Korea",
-        "city": "Seoul",
-        "airport": "ICN.AIRPORT"
-    },
-    {
-        "country": "Malaysia",
-        "city": "Kuala Lumpur",
-        "airport": "KUL.AIRPORT"
-    },
-    {
-        "country": "Philippines",
-        "city": "Manila",
-        "airport": "MNL.AIRPORT"
-    },
-    {
-        "country": "Vietnam",
-        "city": "Hanoi",
-        "airport": "HAN.AIRPORT"
-    },
-    {
-        "country": "Taiwan",
-        "city": "Taipei",
-        "airport": "TPE.AIRPORT"
     }
 ]

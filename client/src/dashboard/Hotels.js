@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Import Link
 import cities from './data/cities.json';
 import {
   Container,
@@ -19,7 +20,9 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import BookOnlineIcon from '@mui/icons-material/BookOnline';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import EventIcon from '@mui/icons-material/Event';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 function HotelSearchForm() {
   const [hotelDetails, setHotelDetails] = useState({
@@ -49,9 +52,7 @@ function HotelSearchForm() {
     }
   };
 
-  const handleBookHotel = (hotel) => {
-    console.log('Booking hotel:', hotel);
-  };
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <Container component="main">
@@ -100,6 +101,7 @@ function HotelSearchForm() {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    inputProps={{ min: today }} // Disable past dates
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -114,6 +116,7 @@ function HotelSearchForm() {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    inputProps={{ min: today }} // Disable past dates
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -148,11 +151,11 @@ function HotelSearchForm() {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>City</TableCell>
-                    <TableCell>Check-in</TableCell>
-                    <TableCell>Check-out</TableCell>
-                    <TableCell>Price</TableCell>
-                    <TableCell>Action</TableCell>
+                    <TableCell><LocationOnIcon /> City</TableCell>
+                    <TableCell><EventIcon /> Check-in</TableCell>
+                    <TableCell><EventIcon /> Check-out</TableCell>
+                    <TableCell><AttachMoneyIcon /> Price</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -163,14 +166,11 @@ function HotelSearchForm() {
                       <TableCell>{hotel.depart}</TableCell>
                       <TableCell>{hotel.price}</TableCell>
                       <TableCell>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          startIcon={<BookOnlineIcon />}
-                          onClick={() => handleBookHotel(hotel)}
-                        >
-                          Book
-                        </Button>
+                        <Link to={`/hotelbook?city=${hotel.city}&arrival=${hotel.arrival}&departure=${hotel.depart}&guests=${hotelDetails.guests}&price=${hotel.price}`}>
+                          <Button variant="contained">
+                            Book
+                          </Button>
+                        </Link>
                       </TableCell>
                     </TableRow>
                   ))}

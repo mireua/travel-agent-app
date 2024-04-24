@@ -3,7 +3,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AttractionsIcon from '@mui/icons-material/Attractions';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import HotelIcon from '@mui/icons-material/Hotel';
 import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 
@@ -26,12 +25,6 @@ export const mainListItems = (setCurrentView) => (
         <AttractionsIcon />
       </ListItemIcon>
       <ListItemText primary="Attractions" />
-    </ListItemButton>
-    <ListItemButton onClick={() => setCurrentView("admin")}>
-      <ListItemIcon>
-        <SupervisorAccountIcon />
-      </ListItemIcon>
-      <ListItemText primary="Admin Panel" />
     </ListItemButton>
   </React.Fragment>
 );

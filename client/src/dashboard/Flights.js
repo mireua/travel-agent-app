@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Import Link
 import {
   Container,
   Grid,
@@ -10,6 +11,8 @@ import {
   MenuItem,
   Button,
   Paper,
+  Card,
+  CardContent,
   TableContainer,
   Table,
   TableHead,
@@ -55,130 +58,142 @@ function FlightSearchForm() {
     }
   };
 
+  const today = new Date().toISOString().split('T')[0];
+
   return (
-    <Container component="main">
-      <Paper elevation={3} sx={{ my: 4, p: 3, borderRadius: 2, bgcolor: 'background.paper', boxShadow: '1px 1px 12px rgba(0,0,0,0.2)' }}>
-        <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
-          Search Flights
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <form onSubmit={handleSubmit}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id="from-label">From</InputLabel>
-                    <Select
-                      labelId="from-label"
-                      name="from"
-                      value={flightDetails.from}
-                      label="From"
+    <Container component="main" sx={{ marginTop: '50px' }}>
+      <Grid container spacing={2}>
+        {/* Search Form Panel */}
+        <Grid item xs={12} md={4}>
+          <Card>
+            <CardContent>
+              <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
+                Search Flights
+              </Typography>
+              <form onSubmit={handleSubmit}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth>
+                      <InputLabel id="from-label">From</InputLabel>
+                      <Select
+                        labelId="from-label"
+                        name="from"
+                        value={flightDetails.from}
+                        label="From"
+                        onChange={handleInputChange}
+                        required
+                      >
+                        {cities.map((city) => (
+                          <MenuItem key={city.airport} value={city.airport}>
+                            {city.city}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth>
+                      <InputLabel id="to-label">To</InputLabel>
+                      <Select
+                        labelId="to-label"
+                        name="to"
+                        value={flightDetails.to}
+                        label="To"
+                        onChange={handleInputChange}
+                        required
+                      >
+                        {cities.map((city) => (
+                          <MenuItem key={city.airport} value={city.airport}>
+                            {city.city}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      type="date"
+                      name="departDate"
+                      label="Departure Date"
+                      value={flightDetails.departDate}
                       onChange={handleInputChange}
                       required
-                      MenuProps={{
-                        PaperProps: {
-                          style: {
-                            maxHeight: 200,
-                          },
-                        },
-                      }}
-                    >
-                      {cities.map((city) => (
-                        <MenuItem key={city.airport} value={city.airport}>
-                          {city.city}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id="to-label">To</InputLabel>
-                    <Select
-                      labelId="to-label"
-                      name="to"
-                      value={flightDetails.to}
-                      label="To"
+                      InputLabelProps={{ shrink: true }}
+                      inputProps={{ min: today }} // Disable past dates
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      type="date"
+                      name="returnDate"
+                      label="Return Date"
+                      value={flightDetails.returnDate}
                       onChange={handleInputChange}
                       required
-                      MenuProps={{
-                        PaperProps: {
-                          style: {
-                            maxHeight: 200,
-                          },
-                        },
-                      }}
-                    >
-                      {cities.map((city) => (
-                        <MenuItem key={city.airport} value={city.airport}>
-                          {city.city}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                      InputLabelProps={{ shrink: true }}
+                      inputProps={{ min: today }} // Disable past dates
+                    />
+                  </Grid>
+                  <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button type="submit" variant="contained" color="primary" disabled={searching}>
+                      {searching ? 'Searching...' : 'Search'}
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    type="date"
-                    name="departDate"
-                    label="Departure Date"
-                    value={flightDetails.departDate}
-                    onChange={handleInputChange}
-                    required
-                    InputLabelProps={{ shrink: true }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    type="date"
-                    name="returnDate"
-                    label="Return Date"
-                    value={flightDetails.returnDate}
-                    onChange={handleInputChange}
-                    required
-                    InputLabelProps={{ shrink: true }}
-                  />
-                </Grid>
-                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Button type="submit" variant="contained" color="primary" disabled={searching}>
-                    {searching ? 'Searching...' : 'Search'}
-                  </Button>
-                </Grid>
-              </Grid>
-            </form>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TableContainer component={Paper} sx={{ maxHeight: '400px', overflowY: 'auto' }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>From</TableCell>
-                    <TableCell>To</TableCell>
-                    <TableCell>Date Departure</TableCell>
-                    <TableCell>Date Return</TableCell>
-                    <TableCell>Price</TableCell>
-                    <TableCell>Airline</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {flights.map((flight, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{flight.from}</TableCell> {/* From */}
-                      <TableCell>{flight.to}</TableCell> {/* To */}
-                      <TableCell>{flight.depart}</TableCell> {/* Departure time */}
-                      <TableCell>{flight.arrival}</TableCell> {/* Arrival time */}
-                      <TableCell>{flight.price}</TableCell> {/* Price */}
-                      <TableCell>{flight.airline}</TableCell> {/* Airline */}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
+              </form>
+            </CardContent>
+          </Card>
         </Grid>
-      </Paper>
+        {/* Flight Results Panel */}
+        <Grid item xs={12} md={8}>
+          <Card>
+            <CardContent>
+              <Typography component="h2" variant="h5" sx={{ mb: 2 }}>
+                Flight Results
+              </Typography>
+              <TableContainer component={Paper}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>From</TableCell>
+                      <TableCell>To</TableCell>
+                      <TableCell>Departure</TableCell>
+                      <TableCell>Return</TableCell>
+                      <TableCell>Price</TableCell>
+                      <TableCell>Airline</TableCell>
+                      <TableCell></TableCell> {/* New column for book button */}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {flights.map((flight, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{flight.from}</TableCell>
+                        <TableCell>{flight.to}</TableCell>
+                        <TableCell>{flight.depart}</TableCell>
+                        <TableCell>{flight.arrival}</TableCell>
+                        <TableCell>{flight.price}</TableCell>
+                        <TableCell>
+                          <img src={flight.image} alt={flight.airline} style={{ width: 50, height: 50, marginRight: 10 }} />
+                          {flight.airline}
+                        </TableCell>
+                        <TableCell>
+                          <Link to={`/booking?from=${flight.from}&to=${flight.to}&depart=${flight.depart}&arrival=${flight.arrival}&price=${flight.price}&airline=${flight.airline}&image=${flight.image}`}>
+                            <Button variant="outlined">
+                              Book
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </Container>
   );
 }

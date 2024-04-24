@@ -28,7 +28,8 @@ router.post('/searchFlights', async (req, res) => {
         depart: new Date(flight.segments[0].departureTime).toLocaleString(),
         arrival: new Date(flight.segments[0].arrivalTime).toLocaleString(),
         airline: flight.segments[0].legs[0].carriersData[0].name,
-        price: '€' + flight.priceBreakdown.total.units
+        price: '€' + flight.priceBreakdown.total.units,
+        image: flight.segments[0].legs[0].carriersData[0].logo
       };
       flightsData.push(flightData);
     }

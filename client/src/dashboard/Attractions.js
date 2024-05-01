@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import cities from './data/cities.json';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CategoryIcon from '@mui/icons-material/Category';
+import backgroundImage from './img/attractions.jpg'; // Import your background image here
 
 const AttractionsTable = () => {
   const [attractions, setAttractions] = useState([]);
@@ -33,8 +34,20 @@ const AttractionsTable = () => {
   };
 
   return (
-    <Box sx={{ width: 'auto', margin: 2, boxShadow: 3, borderRadius: 2, backgroundColor: 'background.paper' }}>
-      <Box sx={{ padding: 2 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        padding: 2,
+      }}
+    >
+      <Paper sx={{ boxShadow: 3, borderRadius: 2, bgcolor: 'rgba(255,255,255,0.8)', padding: 2, width: '100%', maxWidth: 600 }}>
         <form onSubmit={handleFormSubmit}>
           <FormControl fullWidth>
             <InputLabel>Select City</InputLabel>
@@ -63,8 +76,8 @@ const AttractionsTable = () => {
             </Button>
           </Box>
         </form>
-      </Box>
-      <TableContainer component={Paper}>
+      </Paper>
+      <TableContainer component={Paper} sx={{ marginTop: 2, borderRadius: 2, backgroundColor: 'rgba(255, 255, 255, 0.8)', width: '100%', maxWidth: 600 }}>
         <Table aria-label="attractions table">
           <TableHead>
             <TableRow>

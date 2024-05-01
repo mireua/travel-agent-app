@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box } from '@mui/material';
+import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Button} from '@mui/material';
 
 const MyItinerary = () => {
   const [itineraryData, setItineraryData] = useState([]);
@@ -9,7 +9,7 @@ const MyItinerary = () => {
 
     const fetchItineraryData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/itinerary?email=${userEmail}`, { method: 'POST' }); // Update with your backend URL
+        const response = await fetch(`http://localhost:5000/api/itinerary?email=${userEmail}`, { method: 'POST' });
         if (!response.ok) {
           throw new Error('Failed to fetch itinerary data');
         }
@@ -25,11 +25,20 @@ const MyItinerary = () => {
     }
   }, []);
 
+  const handleCancelFlight = () => {
+    // Handle cancel flight logic
+  };
+
+  const handleCancelHotel = () => {
+    // Handle cancel hotel logic
+  };
+
   return (
     <Box maxWidth="800px" mx="auto" p={4} textAlign="center">
       <Typography variant="h4" gutterBottom>
         My Itinerary
       </Typography>
+
       <Box mb={4}>
         <Typography variant="h5" gutterBottom>
           Flights
@@ -44,6 +53,7 @@ const MyItinerary = () => {
                 <TableCell>Arrival</TableCell>
                 <TableCell>Price</TableCell>
                 <TableCell>Airline</TableCell>
+                <TableCell>Action</TableCell> {/* Cancel button */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -55,12 +65,18 @@ const MyItinerary = () => {
                   <TableCell>{item.arrival}</TableCell>
                   <TableCell>{item.price}</TableCell>
                   <TableCell><img src={item.image} alt="" style={{ width: 50, height: 50, marginRight: 10 }} /></TableCell>
+                  <TableCell>
+                    <Button variant="outlined" color="secondary" onClick={handleCancelFlight}>
+                      Cancel Flight
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Box>
+
       <Typography variant="h5" gutterBottom>
         Hotel Bookings
       </Typography>
@@ -73,6 +89,7 @@ const MyItinerary = () => {
               <TableCell>Guests</TableCell>
               <TableCell>Price</TableCell>
               <TableCell>Reservation Name</TableCell>
+              <TableCell>Action</TableCell> {/* Cancel button */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -83,6 +100,11 @@ const MyItinerary = () => {
                 <TableCell>{item.guests}</TableCell>
                 <TableCell>{item.price}</TableCell>
                 <TableCell>{item.cardholderName}</TableCell>
+                <TableCell>
+                  <Button variant="outlined" color="secondary" onClick={handleCancelHotel}>
+                    Cancel Hotel Booking
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

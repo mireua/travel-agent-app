@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import AirplaneIcon from '@mui/icons-material/FlightTakeoff';
 import '@fontsource/poppins';
 import './login.css';
-import RegistrationForm from './RegForm'; // Assuming this is your registration form component
+import RegistrationForm from './RegForm'; 
 
 const containerStyle = {
   display: 'flex',
@@ -75,6 +75,10 @@ function Login() {
       const response = await axios.post('http://localhost:5000/api/login', { email, password });
       if (response.data.message === 'Login successful') {
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('role', response.data.role);
+        localStorage.setItem('firstName', response.data.firstName);
+        console.log('Role: ' + response.data.role);
+        console.log('First Name: ' + response.data.firstName);
         localStorage.setItem('email', email);
         navigate('/dashboard');
       } else {

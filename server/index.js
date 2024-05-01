@@ -11,6 +11,7 @@ const attractionRoutes = require('./routes/travelapi/attractions/route.js');
 const bookFlight = require('./routes/checkout/booking.js');
 const bookHotel = require('./routes/checkout/hotels.js');
 const itinerary = require('./routes/itinerary/itinerary.js');
+const adminItinerary = require('./routes/admin/admin_itinerary.js');
 
 app.use(express.json());
 app.use(cors());
@@ -24,6 +25,7 @@ app.use('/api', attractionRoutes);
 app.use('/api', bookFlight);
 app.use('/api', bookHotel);
 app.use('/api', itinerary);
+app.use('/api', adminItinerary);
 
 connectToMongoDB();
 

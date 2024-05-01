@@ -28,11 +28,6 @@ const AttractionsTable = () => {
     }
   };
 
-  const handleSave = (attraction) => {
-    // Add your save logic here
-    console.log('Saving attraction:', attraction);
-  };
-
   return (
     <Box
       sx={{
@@ -83,7 +78,6 @@ const AttractionsTable = () => {
             <TableRow>
               <TableCell><LocationOnIcon /> Attraction</TableCell>
               <TableCell><CategoryIcon /> Type</TableCell>
-              <TableCell>Actions</TableCell> {/* New column for Save button */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -91,15 +85,6 @@ const AttractionsTable = () => {
               <TableRow key={index}>
                 <TableCell>{attraction.city}</TableCell>
                 <TableCell>{attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleSave(attraction)}
-                  >
-                    Save
-                  </Button>
-                </TableCell>
               </TableRow>
             ))}
           </TableBody>

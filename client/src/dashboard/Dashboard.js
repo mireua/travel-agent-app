@@ -19,6 +19,7 @@ import Hotels from './Hotels';
 import Itinerary from './Itinerary';
 import Attractions from './Attractions';
 import Main from './Main';
+import Notifications from './Notifications';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -188,6 +189,8 @@ export default function Dashboard() {
         return <Admin />;
       case 'itinerary':
         return <Itinerary />;
+      case 'notifications':
+        return <Notifications />;
       default:
         return <div>Select a view</div>;
     }

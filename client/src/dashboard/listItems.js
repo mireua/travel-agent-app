@@ -7,6 +7,7 @@ import HotelIcon from '@mui/icons-material/Hotel';
 import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 export const mainListItems = (setCurrentView) => (
   <React.Fragment>
@@ -15,6 +16,12 @@ export const mainListItems = (setCurrentView) => (
         <PlaylistAddCheckIcon />
       </ListItemIcon>
       <ListItemText primary="My Itinerary" />
+    </ListItemButton>
+    <ListItemButton onClick={() => setCurrentView("notifications")}>
+      <ListItemIcon>
+        <NotificationsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Notifications" />
     </ListItemButton>
      <ListItemButton onClick={() => setCurrentView("flights")}>
       <ListItemIcon>
@@ -34,11 +41,13 @@ export const mainListItems = (setCurrentView) => (
       </ListItemIcon>
       <ListItemText primary="Attractions" />
     </ListItemButton>
-    <ListItemButton onClick={() => setCurrentView("contact")}>
+    <ListItemButton>
       <ListItemIcon>
         <ContactMailIcon />
       </ListItemIcon>
-      <ListItemText primary="Contact Us" />
+      <ListItemText primary="Contact Us" onClick={() => {
+        window.location.href = 'mailto:traveleasy@example.com?subject=Inquiry%20with%20TravelEasy';
+      }} />
     </ListItemButton>
   </React.Fragment>
 );

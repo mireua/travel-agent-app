@@ -38,13 +38,15 @@ router.post('/delete-itinerary', async (req, res) => {
             issued_to: itinerary.userEmail, 
             message: `Your ${itinerary.type} booking was cancelled by Admin ${firstName}!`, 
             reason: reason, 
-            read: false
+            read: false,
+            time: new Date().toLocaleString()
         });
 
         const log_collection = database.collection('logs');
         await log_collection.insertOne({
             by: adminEmail, 
             log_message: `Admin ${firstName} has deleted the itinerary ID: ${itineraryID}!`,
+            reason: reason,
             type: 'delete',
             time: new Date().toLocaleString()
         });

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Typography, TextField, Table, TableBody, TableCell, TableContainer, TableRow,
+    Typography, Table, TableBody, TableCell, TableContainer, TableRow,
     Paper, TableHead, IconButton, Button, Dialog, DialogTitle, DialogContent,
     DialogActions, TextField as MuiTextField
 } from '@mui/material';
@@ -11,7 +11,6 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 const UserManagement = () => {
-    const [filter, setFilter] = useState('');
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -112,17 +111,9 @@ const UserManagement = () => {
 
     return (
         <Paper sx={{ padding: 3, backgroundColor: '#fff' }}>
-            <Typography variant="h5" gutterBottom style={{ textAlign: 'center' }}>
+            <Typography variant="h5" gutterBottom style={{ textAlign: 'center', paddingBottom: '7px' }}>
                 User Management Panel
             </Typography>
-            <TextField
-                label="Search Users"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                value={filter}
-                onChange={e => setFilter(e.target.value)}
-            />
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
                     <TableHead>
@@ -146,7 +137,7 @@ const UserManagement = () => {
                                   <IconButton disabled={user.email === currentUserEmail} onClick={() => promptDelete(user.email)}>
                                       <DeleteIcon />
                                   </IconButton>
-                                  <IconButton onClick={() => toggleUserRole(user)}>
+                                  <IconButton disabled={user.email === currentUserEmail} onClick={() => toggleUserRole(user)}>
                                       {user.role === 'admin' ? <ArrowDownwardIcon /> : <AdminPanelSettingsIcon />}
                                   </IconButton>
                               </TableCell>

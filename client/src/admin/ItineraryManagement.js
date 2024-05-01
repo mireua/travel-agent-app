@@ -53,7 +53,7 @@ const ItineraryManagement = () => {
     console.log('Cancellation Reason:', cancelReason);
     console.log(selectedItineraryID);
     try {
-        await axios.post('http://localhost:5000/api/delete-itinerary', {
+        await axios.post('http://localhost:5000/api/admin-delete-itinerary', {
             params: {
                 itineraryID: selectedItineraryID,
                 email: email,

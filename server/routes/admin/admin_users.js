@@ -155,7 +155,7 @@ router.post('/admin-promote-user', async (req, res) => {
             by: adminEmail,
             log_message: `User ${email} was demoted to regular user by ${adminEmail}`,
             type: 'demotion',
-            time: new Date().toISOString()
+            time: new Date().toLocaleString()
         });
 
         const message_collection = database.collection('messages');

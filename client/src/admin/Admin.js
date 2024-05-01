@@ -4,8 +4,10 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import MapIcon from '@mui/icons-material/Map';
 import HomeIcon from '@mui/icons-material/Home';
-import UserManagement from './UserManagement'; // Adjust path as necessary
-import ItineraryManagement from './ItineraryManagement'; // Adjust path as necessary
+import UserManagement from './UserManagement'; 
+import ItineraryManagement from './ItineraryManagement'; 
+import AdminLog from './AdminLog'; 
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 function App() {
   const [activePanel, setActivePanel] = useState('user');
@@ -70,6 +72,9 @@ function App() {
           <Button color="inherit" onClick={() => setActivePanel('itinerary')} sx={hoverStyle} startIcon={<MapIcon />}>
             Itinerary Management
           </Button>
+          <Button color="inherit" onClick={() => setActivePanel('adminLog')} sx={hoverStyle} startIcon={<VisibilityIcon />}>
+            Admin Log
+          </Button>
           <Button color="inherit" onClick={() => window.location.href = '/dashboard'} sx={hoverStyle} startIcon={<HomeIcon />}>
             Back to Homepage
           </Button>
@@ -79,8 +84,10 @@ function App() {
         <Grid item xs={12}>
           {activePanel === 'user' ? (
             <UserManagement />
-          ) : (
+          ) : activePanel === 'itinerary' ? (
             <ItineraryManagement />
+          ) : (
+            <AdminLog />
           )}
         </Grid>
       </Grid>

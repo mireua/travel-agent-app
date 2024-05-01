@@ -16,8 +16,8 @@ import { mainListItems } from './listItems';
 import Flights from './Flights';
 import Admin from '../admin/Admin';
 import Hotels from './Hotels';
-import Itinerary from './Itinerary';
 import Attractions from './Attractions';
+import Itinerary from './Itinerary';
 import Main from './Main';
 import Notifications from './Notifications';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -169,7 +169,8 @@ export default function Dashboard() {
               </ListItemIcon>
               <ListItemText primary="Admin Panel" />
             </ListItemButton>
-          </List></>
+          </List>
+      </>
     )}
       </Drawer>
     );

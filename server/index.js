@@ -14,6 +14,7 @@ const itinerary = require('./routes/itinerary/itinerary.js');
 const adminItinerary = require('./routes/admin/admin_itinerary.js');
 const adminUsers = require('./routes/admin/admin_users.js');
 const notifications = require('./routes/notifications/notifications.js');
+const adminLog = require('./routes/admin/admin_log.js');
 
 app.use(express.json());
 app.use(cors());
@@ -30,6 +31,7 @@ app.use('/api', itinerary);
 app.use('/api', adminItinerary);
 app.use('/api', adminUsers);
 app.use('/api', notifications);
+app.use('/api', adminLog);
 
 
 connectToMongoDB();

@@ -20,7 +20,7 @@ router.post('/adminItinerary', async (req, res) => {
     }
 });
 
-router.post('/delete-itinerary', async (req, res) => { 
+router.post('/admin-delete-itinerary', async (req, res) => { 
     const { itineraryID, email, firstName, reason, adminEmail } = req.body.params;
     
     try {

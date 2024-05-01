@@ -5,7 +5,8 @@ import Typography from '@mui/material/Typography';
 import FlightIcon from '@mui/icons-material/Flight';
 import HotelIcon from '@mui/icons-material/Hotel';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
-import backgroundImage from './img/clouds.jpg'; // Adjusted image directory
+import backgroundImage from './img/clouds.jpg';
+import './css/font.css';
 
 const useStyles = makeStyles((theme) => ({
   landingPageContainer: {
@@ -26,16 +27,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    color: 'white', // Text color on top of background image
-    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', // Add text shadow for better readability
+    color: 'white',
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', 
   },
   heroHeading: {
-    fontFamily: 'Dancing Script, cursive', // Apply Dancing Script font
     fontSize: '4.5rem',
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(4),
   },
   heroSubheading: {
-    fontFamily: 'Dancing Script, cursive', // Apply Dancing Script font
     fontSize: '2rem',
     marginBottom: theme.spacing(4),
   },
@@ -72,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   sectionText: {
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(4),
   },
 }));
 
@@ -82,11 +81,11 @@ const LandingPage = ({ setCurrentView }) => {
   return (
     <div className={classes.landingPageContainer}>
       <div className={classes.heroSection}>
-        <Typography variant="h1" className={classes.heroHeading}>
-          Welcome to TravelEasy
-        </Typography>
-        <Typography variant="h3" className={classes.heroSubheading}>
+        <Typography variant="h1" style={{ fontFamily: 'Dancing Script, cursive', marginBottom: '5px' }} className={classes.heroHeading}>
           TravelEasy, travel easy.
+        </Typography>
+        <Typography variant="h3" style={{ fontFamily: 'Dancing Script, cursive', marginBottom: '15px'}} className={classes.heroSubheading}>
+          It's been a while, {localStorage.getItem('firstName')}...
         </Typography>
         <div className={classes.heroButtons}>
           <Button
@@ -121,19 +120,19 @@ const LandingPage = ({ setCurrentView }) => {
       <div className={classes.panelContainer}>
         <div className={classes.sectionContainer}>
           <div className={classes.section}>
-            <Typography variant="h4" className={classes.sectionText}>Why us?</Typography>
+            <Typography variant="h4" style={{ fontFamily: 'Dancing Script, cursive'}} className={classes.sectionText}>Why us?</Typography>
             <Typography className={classes.sectionText}>
               Simplicity and efficiency is our goal. We strive to make it feel like you can do everything in one application; no matter the situation.
             </Typography>
           </div>
           <div className={classes.section}>
-            <Typography variant="h4" className={classes.sectionText}>Honesty Over Everything</Typography>
+            <Typography variant="h4" style={{ fontFamily: 'Dancing Script, cursive'}} className={classes.sectionText}>Honesty Over Everything</Typography>
             <Typography className={classes.sectionText}>
               We show you the final price, whenever you search for a flight or a hotel. We add up everything and make things easy for you.
             </Typography>
           </div>
           <div className={classes.section}>
-            <Typography variant="h4" className={classes.sectionText}>Seamless.</Typography>
+            <Typography variant="h4" style={{ fontFamily: 'Dancing Script, cursive'}} className={classes.sectionText}>Seamless.</Typography>
             <Typography className={classes.sectionText}>
               We've built an application that works just as fast as you can click. The milliseconds matter.
             </Typography>

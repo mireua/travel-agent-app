@@ -1,5 +1,4 @@
 const express = require('express');
-const axios = require('axios');
 const { connectToMongoDB } = require('./db/conn');
 const app = express();
 const cors = require('cors');
@@ -36,7 +35,8 @@ app.use('/api', adminLog);
 
 connectToMongoDB();
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}!`);
+const server = app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server is running on port ${server.address().port}!`);
 });
+
+module.exports = server;

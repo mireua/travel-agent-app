@@ -11,14 +11,14 @@ router.post('/register', async (req, res) => {
     const collection = database.collection('users');
     const existingUser = await collection.findOne({ email });
     if (existingUser) {
-      console.log("account already exists u spa");
-      res.status(500).json({ message: 'Email already registered.' });
-      return;
+      console.log("Account already exists.");
+      return res.status(400).json({ message: 'Email already registered.' }); // Changed status code to 400 for duplicate entry
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     await collection.insertOne({ firstName, lastName, email, password: hashedPassword, role: 'user' });
-    res.json({ message: 'Registration successful.' });
+    res.status(201).json({ message: 'Registration successful.' }); // Changed status code to 201 for resource creation
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Internal server error.' });
   } finally {
     await client.close();
